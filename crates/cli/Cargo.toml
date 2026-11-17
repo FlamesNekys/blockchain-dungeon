@@ -1,0 +1,10 @@
+[package]
+name = "cli"
+version = "0.1.0"
+edition.workspace = true
+
+[dependencies]
+game = { version = "0.1.0", path = "../game" }
+
+[lints]
+workspace = true
