@@ -7,6 +7,9 @@ pub const POTION_HEAL: u32 = 30;
 pub const SWORD: &str = "sword";
 pub const POTION: &str = "potion";
 
+/// # Errors
+///
+/// Will return `Err` if args are incorrect or game rule broken
 pub fn apply(
     state: &mut GameState,
     who: PlayerId,

@@ -55,6 +55,9 @@ impl From<ParseIntError> for CommandError {
     }
 }
 
+/// # Errors
+///
+/// Will return `Err` if input or arguments are incorrect or can't be parsed
 pub fn parse_command(line: &str) -> Result<Command, CommandError> {
     let mut parts = line.split_whitespace();
     let who = PlayerId(parts.next().ok_or(CommandError::Empty)?.parse()?);

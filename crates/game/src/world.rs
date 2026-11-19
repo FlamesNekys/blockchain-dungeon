@@ -106,6 +106,22 @@ impl World {
         self.tiles.get(index)
     }
 
+    #[must_use]
+    pub fn from_fn(width: u32, height: u32, mut tile_at: impl FnMut(Position) -> Tile) -> World {
+        let tiles = (0..height)
+            .flat_map(|y| (0..width).map(move |x| (x, y)))
+            .map(|(x, y)| match (i32::try_from(x), i32::try_from(y)) {
+                (Ok(x), Ok(y)) => tile_at(Position { x, y }),
+                _ => Tile::Wall,
+            })
+            .collect();
+        World {
+            width,
+            height,
+            tiles,
+        }
+    }
+
     pub fn set_tile(&mut self, position: Position, tile: Tile) -> bool {
         let Some(slot) = self.index_of(position).and_then(|i| self.tiles.get_mut(i)) else {
             return false;

@@ -8,7 +8,7 @@ fn expect_action(line: &str, who: u32, action: Action) {
         who: PlayerId(who),
         action,
     };
-    assert_eq!(parse_command(line), Ok(expected), "строка: {line:?}")
+    assert_eq!(parse_command(line), Ok(expected), "строка: {line:?}");
 }
 
 #[test]

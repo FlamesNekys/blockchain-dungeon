@@ -23,16 +23,13 @@ impl GameState {
 
     #[must_use]
     pub fn genesis() -> GameState {
-        let mut world = World::new(7, 5);
-        for y in 0..5 {
-            for x in 0..7 {
-                if y == 0 || y == 4 || x == 0 || x == 6 || ((x == 4 || x == 2) && y == 2) {
-                    world.set_tile(Position { x, y }, Tile::Wall);
-                }
-            }
-        }
-        world.set_tile(Position { x: 3, y: 1 }, Tile::Chest(SWORD.to_owned()));
-        world.set_tile(Position { x: 3, y: 3 }, Tile::Chest(POTION.to_owned()));
+        let world = World::from_fn(7, 5, |position| match (position.x, position.y) {
+            (3, 1) => Tile::Chest(SWORD.to_owned()),
+            (3, 3) => Tile::Chest(POTION.to_owned()),
+            (0 | 6, _) | (_, 0 | 4) | (2 | 4, 2) => Tile::Wall,
+            _ => Tile::Floor,
+        });
+
         let mut init = GameState::new(world);
         init.players
             .insert(PlayerId(1), Player::new("Anna", Position { x: 1, y: 1 }));
