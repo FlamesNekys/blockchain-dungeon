@@ -144,6 +144,11 @@ impl World {
     }
 
     #[must_use]
+    pub fn tiles(&self) -> &[Tile] {
+        &self.tiles
+    }
+
+    #[must_use]
     pub fn from_rows(rows: &[&str]) -> Option<World> {
         let first_size = rows.first()?.chars().count();
         let total_rows = rows.len();
